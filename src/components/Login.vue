@@ -25,7 +25,7 @@
   export default {
       name: 'Login',
       mounted() {
-          fetch(api + 'users').then(x => x.json()).then(y => console.log(y));
+      //fetch(api + 'users').then(x => x.json()).then(y => console.log(y));
       },
       data() {
           return {
