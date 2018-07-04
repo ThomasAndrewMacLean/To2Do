@@ -11,10 +11,9 @@
 
 <script>
   export default {
-    name: 'app'
+      name: 'app'
 
   };
-
 
 </script>
 
@@ -37,7 +36,6 @@
   }
 
   main {
-    text-align: center;
     margin-top: 40px;
 
     background: var(--color-three);

@@ -16,6 +16,10 @@ module.exports = {
   // add your custom rules here
   'rules': {
     // allow debugger during development
+    "indent": [
+      "error",
+      4
+    ],
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     "quotes": [
       "error",
@@ -24,6 +28,7 @@ module.exports = {
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "comma-dangle": ["error", "never"]
   }
 }

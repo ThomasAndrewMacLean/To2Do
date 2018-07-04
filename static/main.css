@@ -1,7 +1,63 @@
-:root{
-    --color-one:#f38181;
-    --color-two:#fce38a;
-    --color-three:#eaffd0;
-    --color-four:#95e1d3;
-    
+:root {
+  --color-one: #f38181;
+  --color-two: #fce38a;
+  --color-three: #eaffd0;
+  --color-four: #95e1d3;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  background-color: var(--color-four);
+  border-color: var(--color-four);
+}
+
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: var(--color-four);
+  background-color: white;
+  border-color: var(--color-four);
+}
+
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid var(--color-four);
+  outline: 0;
+}
+
+/* Change the white to any color ;) */
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+/*Change text in autofill textbox*/
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #666 !important;
+}
+
+input {
+  color: #666;
 }
