@@ -3,14 +3,22 @@
     <h3 class="center-text">{{ msg }}</h3>
     <div class="hello">
       <div class="six columns">
-        <label for="exampleEmailInput">New todo</label>
-        <input class="u-full-width" type="text" placeholder="add new todo" v-model="newTodoInput">
-        <button class="button-primary" @click="addTodo">Add</button>
+        <form v-on:submit.prevent="addTodo">
+          <label for="exampleEmailInput">New todo</label>
+          <input class="u-full-width" type="text" placeholder="add new todo" v-model="newTodoInput">
+          <input type="submit" :disabled="!newTodoInput" value="Add" class="button-primary" />
+        </form>
       </div>
     </div>
-    <div v-for="todo in todoos" :key="todo._id" @click="toggleToDo(todo)">
-      {{ todo.todo }} {{todo.done}}
-    </div>
+    <section class="todoContainer">
+
+      <div v-for="todo in todoos" class="todo" :key="todo._id" @click="toggleToDo(todo)">
+        <div class="todoInner">
+          {{ todo.todo }} {{todo.done}}
+          <a @click="deleteTodo(todo._id)">x</a>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -21,18 +29,26 @@
   export default {
       name: 'hello',
       mounted() {
-          fetch(api + 'users').then(x => x.json()).then(y => console.log(y));
           fetch(api + 'todoos', {
               headers: {
-
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
               },
               method: 'GET'
           }).then(x => x.json().then(y => {
               //      console.log(x);
               console.log(y);
+              if (y.message === 'jwt expired') {
+                  this.$router.push('/login');
+              }
+              if (y.message === 'jwt malformed') {
+                  this.$router.push('/signup');
+              }
               this.todoos = y;
-          }));
+          })).catch(err => {
+
+
+              console.log(err);
+          });
       },
       data() {
           return {
@@ -43,7 +59,7 @@
       },
       methods: {
           toggleToDo(todo) {
-              console.log(todo);
+              console.log('toggle ' + todo);
               todo.done = !todo.done;
               fetch(api + 'toggleDone', {
                   headers: {
@@ -63,8 +79,6 @@
               }));
           },
           addTodo() {
-
-
               fetch(api + 'addtodo', {
                   headers: {
                       Accept: 'application/json',
@@ -81,6 +95,34 @@
                   console.log(y);
                   this.todoos.push(y);
               }));
+          },
+          deleteTodo(id) {
+              event.stopPropagation();
+              console.log('delete ' + id);
+
+              fetch(api + 'deleteTodo', {
+                  headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ' + localStorage.getItem('token')
+                  },
+                  method: 'DELETE',
+                  body: JSON.stringify({
+                      id: id
+                  })
+              }).then(x => x.json().then(y => {
+                  //      console.log(x);
+                  console.log(y);
+                  if (y.message === 'jwt expired') {
+                      this.$router.push('/login');
+                  }
+                  if (y.message === 'jwt malformed') {
+                      this.$router.push('/signup');
+                  }
+                  this.todoos.splice(this.todoos.findIndex(i => i._id === id), 1);
+              })).catch(err => {
+                  console.log(err);
+              });
           }
 
       }
@@ -90,6 +132,27 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+  .todoContainer {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .todo {
+    width: 25%;
+    float: left;
+    box-sizing: border-box;
+    padding: 10px 10px;
+    cursor: pointer;
+  }
+
+  .todoInner {
+    padding: 35px;
+    background: var(--color-two);
+  }
+
   h1,
   h2 {
     font-weight: normal;
