@@ -1,3 +1,11 @@
 https://medium.com/hyphe/using-refresh-tokens-in-node-to-stay-authenticated-ad0c9d2b444f
 
 https://developers.google.com/identity/sign-in/web
+
+https://lollyrock.com/articles/nodejs-encryption/
+
+https://robomongo.org/download
+
+https://mlab.com/databases/to2so
+
+https://dashboard.heroku.com/apps/to2do-api
