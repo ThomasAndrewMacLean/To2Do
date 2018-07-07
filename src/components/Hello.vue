@@ -31,13 +31,13 @@
   export default {
       name: 'hello',
       mounted() {
-          let auth = 'Bearer ' + localStorage.getItem('token');
+          this.auth = 'Bearer ' + localStorage.getItem('token');
           if (localStorage.getItem('googleToken')) {
-              auth = 'Google ' + localStorage.getItem('googleToken');
+              this.auth = 'Google ' + localStorage.getItem('googleToken');
           }
           fetch(api + 'todoos', {
               headers: {
-                  'Authorization': auth
+                  'Authorization': this.auth
               },
               method: 'GET'
           }).then(x => x.json().then(y => {
@@ -57,7 +57,8 @@
               msg: 'Welcome to Your Vue.js PWA',
               newTodoInput: null,
               todoos: [],
-              deleteMode: false
+              deleteMode: false,
+              auth: ''
           };
       },
       methods: {
@@ -71,7 +72,7 @@
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + localStorage.getItem('token')
+                      'Authorization': this.auth
                   },
                   method: 'POST',
                   body: JSON.stringify({
@@ -89,7 +90,7 @@
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + localStorage.getItem('token')
+                      'Authorization': this.auth
                   },
                   method: 'POST',
                   body: JSON.stringify({
@@ -112,7 +113,7 @@
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + localStorage.getItem('token')
+                      'Authorization': this.auth
                   },
                   method: 'DELETE',
                   body: JSON.stringify({
