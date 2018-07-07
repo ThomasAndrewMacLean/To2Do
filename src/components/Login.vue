@@ -34,9 +34,7 @@
           gapi.load('auth2', () => {
               // Retrieve the singleton for the GoogleAuth library and set up the client.
               var auth2 = gapi.auth2.init({
-                  client_id: '171417293160-02sar26733jopm7hvfb6e5cgk4mq21d7.apps.googleusercontent.com',
-                  scope: 'email profile openid',
-                  response_type: 'id_token token code'
+                  client_id: '171417293160-02sar26733jopm7hvfb6e5cgk4mq21d7.apps.googleusercontent.com'
               });
               const element = document.getElementById('customBtn');
               auth2.attachClickHandler(element, {},
