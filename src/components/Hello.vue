@@ -67,7 +67,7 @@
                   return;
               }
               todo.done = !todo.done;
-              fetch(api + 'toggleDone', {
+              fetch(api + 'toggleDone/', {
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
@@ -85,7 +85,7 @@
               });
           },
           addTodo() {
-              fetch(api + 'addtodo', {
+              fetch(api + 'addtodo/', {
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
@@ -108,7 +108,7 @@
               event.stopPropagation();
               console.log('delete ' + id);
 
-              fetch(api + 'deleteTodo', {
+              fetch(api + 'deleteTodo/', {
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
