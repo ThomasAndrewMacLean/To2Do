@@ -9,13 +9,15 @@
           <input type="submit" :disabled="!newTodoInput" value="Add" class="button-primary" />
         </form>
       </div>
+      <button @click="deleteMode=!deleteMode">🗑 {{deleteMode}}</button>
     </div>
     <section class="todoContainer">
 
-      <div v-for="todo in todoos" class="todo" :key="todo._id" @click="toggleToDo(todo)">
-        <div class="todoInner">
-          {{ todo.todo }} {{todo.done}}
-          <a @click="deleteTodo(todo._id)">x</a>
+      <div v-for="todo in todoos" class="todo" :key="todo._id">
+        <div v-bind:class="{ 'deleteMode': deleteMode}" class="todoInner" @click="toggleToDo(todo)">
+          {{ todo.todo }}
+          <div v-if="todo.done">✅</div>
+          <p v-if="!todo.done"></p>
         </div>
       </div>
     </section>
@@ -54,12 +56,16 @@
           return {
               msg: 'Welcome to Your Vue.js PWA',
               newTodoInput: null,
-              todoos: []
+              todoos: [],
+              deleteMode: false
           };
       },
       methods: {
           toggleToDo(todo) {
-              console.log('toggle ' + todo);
+              if (this.deleteMode) {
+                  this.deleteTodo(todo._id);
+                  return;
+              }
               todo.done = !todo.done;
               fetch(api + 'toggleDone', {
                   headers: {
@@ -74,9 +80,9 @@
                   })
               }).then(x => x.json().then(y => {
                   this.newTodoInput = null;
-                  //  console.log(x);
-                  console.log(y);
-              }));
+              })).catch(() => {
+                  this.$router.push('/login');
+              });
           },
           addTodo() {
               fetch(api + 'addtodo', {
@@ -94,7 +100,9 @@
                   //  console.log(x);
                   console.log(y);
                   this.todoos.push(y);
-              }));
+              })).catch(() => {
+                  this.$router.push('/login');
+              });
           },
           deleteTodo(id) {
               event.stopPropagation();
@@ -120,8 +128,8 @@
                       this.$router.push('/signup');
                   }
                   this.todoos.splice(this.todoos.findIndex(i => i._id === id), 1);
-              })).catch(err => {
-                  console.log(err);
+              })).catch(() => {
+                  this.$router.push('/login');
               });
           }
 
@@ -140,15 +148,20 @@
     flex-wrap: wrap;
   }
 
+  .todoInner.deleteMode {
+    background: red;
+    color: white;
+  }
+
   .todo {
     width: 25%;
     float: left;
     box-sizing: border-box;
     padding: 10px 10px;
-    cursor: pointer;
   }
 
   .todoInner {
+    cursor: pointer;
     padding: 35px;
     background: var(--color-two);
   }
