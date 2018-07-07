@@ -14,6 +14,12 @@
         <div class="errorMsg" v-on:click="clearErrorMsg">{{ errorMsg }}</div>
       </div>
     </div>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div id="gSignInWrapper">
+      <button id="customBtn">
+        Google
+      </button>
+    </div>
   </div>
 </template>
 
@@ -25,7 +31,26 @@
   export default {
       name: 'Login',
       mounted() {
-      //fetch(api + 'users').then(x => x.json()).then(y => console.log(y));
+          gapi.load('auth2', () => {
+              // Retrieve the singleton for the GoogleAuth library and set up the client.
+              var auth2 = gapi.auth2.init({
+                  client_id: '171417293160-02sar26733jopm7hvfb6e5cgk4mq21d7.apps.googleusercontent.com',
+                  cookiepolicy: 'single_host_origin'
+                  // Request scopes in addition to 'profile' and 'email'
+                  //scope: 'additional_scope'
+              });
+              const element = document.getElementById('customBtn');
+              auth2.attachClickHandler(element, {},
+                  (googleUser) => {
+                      var id_token = googleUser.getAuthResponse().id_token;
+                      localStorage.setItem('googleToken', id_token);
+                      this.$router.push('/');
+
+                  },
+                  function (error) {
+                      alert(JSON.stringify(error, undefined, 2));
+                  });
+          });
       },
       data() {
           return {
@@ -52,17 +77,22 @@
                       email: this.email,
                       password: this.password
                   })
-              }).then(x => x.json().then(y => {
-                  console.log(x);
-                  console.log(y);
-                  if (x.status === 200) {
-                      localStorage.setItem('token', y.token);
-                      this.$router.push('/');
-                  }
-                  if (y.message) {
-                      this.errorMsg = y.message;
-                  }
-              }));
+              }).then(x =>
+                  x.json().then(y => {
+                      console.log(x);
+                      console.log(y);
+                      if (x.status === 200) {
+                          localStorage.setItem('token', y.token);
+                          this.$router.push('/');
+                      }
+                      if (y.message) {
+                          this.errorMsg = y.message;
+                      }
+                  })
+              );
+          },
+          loginGoogle() {
+
           }
       }
   };

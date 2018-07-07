@@ -31,24 +31,24 @@
   export default {
       name: 'hello',
       mounted() {
+          let auth = 'Bearer ' + localStorage.getItem('token');
+          if (localStorage.getItem('googleToken')) {
+              auth = 'Google ' + localStorage.getItem('googleToken');
+          }
           fetch(api + 'todoos', {
               headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+                  'Authorization': auth
               },
               method: 'GET'
           }).then(x => x.json().then(y => {
-              //      console.log(x);
-              console.log(y);
-              if (y.message === 'jwt expired') {
-                  this.$router.push('/login');
-              }
               if (y.message === 'jwt malformed') {
                   this.$router.push('/signup');
               }
+              if (x.status === 403) {
+                  this.$router.push('/login');
+              }
               this.todoos = y;
           })).catch(err => {
-
-
               console.log(err);
           });
       },

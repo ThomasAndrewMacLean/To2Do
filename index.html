@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.publicPath %>static/skeleton.css">
   <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.publicPath %>static/main.css">
   <meta name="theme-color" content="#4DBA87">
+  <meta name="google-signin-client_id" content="171417293160-02sar26733jopm7hvfb6e5cgk4mq21d7.apps.googleusercontent.com">
 
   <!-- Add to home screen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -40,6 +41,9 @@
   <!-- Todo: only include in production -->
   <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+
+    <script src="https://apis.google.com/js/api:client.js"></script>
 </body>
 
 </html>

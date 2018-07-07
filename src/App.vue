@@ -2,6 +2,7 @@
   <div id="app">
     <header>
       <span>To2Do</span>
+      <button @click="logout" class="logout-btn u-pull-right">logout</button>
     </header>
     <main>
       <router-view></router-view>
@@ -11,7 +12,20 @@
 
 <script>
   export default {
-      name: 'app'
+      name: 'app',
+      methods: {
+          logout() {
+              localStorage.removeItem('googleToken');
+              localStorage.removeItem('token');
+              var auth2 = gapi.auth2.getAuthInstance();
+              if (auth2) {
+                  auth2.signOut().then(function () {
+                      console.log('User signed out.');
+                  });
+              }
+              this.$router.push('/login');
+          }
+      }
 
   };
 
@@ -24,6 +38,10 @@
     margin: 0;
     background: var(--color-three);
 
+  }
+
+  .pull-right {
+    float: right;
   }
 
   #app {
@@ -48,6 +66,14 @@
 
     background-color: var(--color-one);
     color: #ffffff;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .logout-btn {
+    color: white;
+    border: 1px solid white;
   }
 
   header span {
