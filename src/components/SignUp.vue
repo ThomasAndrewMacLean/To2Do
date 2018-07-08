@@ -49,7 +49,7 @@
               }).then(x => x.json().then(y => {
                   console.log(y);
                   localStorage.setItem('token', y.token);
-                  this.$router.push('/');
+                  this.$router.push('/Confirm');
               }));
           }
       }

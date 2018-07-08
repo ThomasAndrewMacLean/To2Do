@@ -107,8 +107,6 @@
           },
           deleteTodo(id) {
               event.stopPropagation();
-              console.log('delete ' + id);
-
               fetch(api + 'deleteTodo/', {
                   headers: {
                       Accept: 'application/json',
@@ -120,8 +118,6 @@
                       id: id
                   })
               }).then(x => x.json().then(y => {
-                  //      console.log(x);
-                  console.log(y);
                   if (y.message === 'jwt expired') {
                       this.$router.push('/login');
                   }

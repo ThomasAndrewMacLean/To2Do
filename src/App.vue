@@ -2,10 +2,11 @@
   <div id="app">
     <header>
       <span>To2Do</span>
+      {{email}}
       <button @click="logout" class="logout-btn u-pull-right">logout</button>
     </header>
     <main>
-      <router-view></router-view>
+      <router-view @setEmail="setEmail"></router-view>
     </main>
   </div>
 </template>
@@ -13,6 +14,11 @@
 <script>
   export default {
       name: 'app',
+      data() {
+          return {
+              email: null
+          };
+      },
       methods: {
           logout() {
               localStorage.removeItem('googleToken');
@@ -23,7 +29,11 @@
                       console.log('User signed out.');
                   });
               }
+              this.email = null;
               this.$router.push('/login');
+          },
+          setEmail(email) {
+              this.email = email;
           }
       }
 

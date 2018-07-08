@@ -41,8 +41,9 @@
                   (googleUser) => {
                       var id_token = googleUser.getAuthResponse().id_token;
                       localStorage.setItem('googleToken', id_token);
+                      var profile = auth2.currentUser.get().getBasicProfile();
+                      this.$emit('setEmail', profile.getName());
                       this.$router.push('/');
-
                   },
                   function (error) {
                       alert(JSON.stringify(error, undefined, 2));
@@ -62,8 +63,7 @@
               this.errorMsg = '';
           },
           login() {
-              console.log(this.email);
-              console.warn(this.password);
+              this.$emit('setEmail', this.email);
               fetch(api + 'login', {
                   headers: {
                       Accept: 'application/json',
@@ -76,8 +76,8 @@
                   })
               }).then(x =>
                   x.json().then(y => {
-                      console.log(x);
-                      console.log(y);
+                      //   console.log(x);
+                      //   console.log(y);
                       if (x.status === 200) {
                           localStorage.setItem('token', y.token);
                           this.$router.push('/');
