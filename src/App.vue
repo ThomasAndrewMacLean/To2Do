@@ -12,7 +12,7 @@
       <code>
         made by:
         <a href="mailto:thomas.maclean+work@gmail.com">thomas maclean</a>
-        <i class="emoji">🤖</i>
+        <router-link class="emoji" to="Admin">🤖</router-link>
 
         {{'© ' +new Date().getFullYear()}}
       </code>
@@ -69,13 +69,13 @@
     -moz-osx-font-smoothing: grayscale;
     color: var(--color-one);
 
-height: 100vh;
+    height: 100vh;
   }
 
 
   main {
     margin: 40px 0;
-  min-height: calc(100vh - 196px);
+    min-height: calc(100vh - 196px);
     background: var(--color-three);
   }
 
@@ -112,7 +112,7 @@ height: 100vh;
 
   footer {
     height: 60px;
-    background:  var(--color-four);
+    background: var(--color-four);
     width: 100vw;
     bottom: 0;
     display: flex;
@@ -122,6 +122,8 @@ height: 100vh;
   }
 
   .emoji {
+    text-decoration: none;
+    cursor:help;
     font-size: large;
     font-style: normal;
   }
