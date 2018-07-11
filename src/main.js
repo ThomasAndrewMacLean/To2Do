@@ -3,7 +3,8 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-
+import LogRocket from 'logrocket';
+LogRocket.init('9kqjro/to2do');
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
