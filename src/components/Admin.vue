@@ -1,12 +1,13 @@
 <template>
   <div>
     <h3 class="center-text">Admin</h3>
-    <div class="hello">
+    <div class="adminPage">
       <h5>logs</h5>
       <a href="https://app.logrocket.com/9kqjro/to2do/" target="_blank">logrocket</a>
       <h5>list of users</h5>
       <div v-for="user in users" :key="user.id" @click="getTodo(user)">
         {{user.email}} {{user.created}} {{user.confirmed}}
+        <button @click="deleteUser(user)">☠️</button>
         <div v-for="todo in user.todoos" :key="todo._id">
           {{todo}}
         </div>
@@ -51,6 +52,12 @@
       },
       methods: {
           getTodo(user) {
+              if (user.todoos.length) {
+                  user.todoos = [];
+                  return;
+              }
+
+
               fetch(api + 'todoForUser', {
                   headers: {
                       Accept: 'application/json',
@@ -63,7 +70,37 @@
                   method: 'POST'
               }).then(x => x.json().then(y => {
                   console.log(y);
-                  user.todoos = [...y];
+                  if (y.length) {
+                      user.todoos = [...y];
+                  } else {
+                      user.todoos.push({
+                          message: 'user has no todoos'
+                      });
+                  }
+                  //user.email = 'ok';
+                  //   this.users.filter(u => u.id === user.id).todoos = y;
+                  //   console.log(this.users);
+
+              })).catch(err => {
+                  console.log(err);
+              });
+          },
+          deleteUser(user) {
+              event.stopPropagation();
+              fetch(api + 'deleteUser', {
+                  headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                      'Authorization': this.auth
+                  },
+                  body: JSON.stringify({
+                      email: user.email
+                  }),
+                  method: 'DELETE'
+              }).then(x => x.json().then(y => {
+                  console.log(y);
+                  this.users.splice(this.users.findIndex(i => i.id === user.id), 1);
+
                   //user.email = 'ok';
                   //   this.users.filter(u => u.id === user.id).todoos = y;
                   //   console.log(this.users);
@@ -79,8 +116,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .hello {
-
+  .adminPage {
+    flex-flow: column;
     padding: 0 7rem;
   }
 
