@@ -25,166 +25,177 @@
 </template>
 
 <script>
-  import {
-      api
-  } from '../api/api';
-  export default {
-      name: 'hello',
-      mounted() {
-          this.auth = 'Bearer ' + localStorage.getItem('token');
-          if (localStorage.getItem('googleToken')) {
-              this.auth = 'Google ' + localStorage.getItem('googleToken');
-          }
-          fetch(api + 'todoos', {
-              headers: {
-                  'Authorization': this.auth
-              },
-              method: 'GET'
-          }).then(x => x.json().then(y => {
-              if (y.message === 'jwt malformed') {
-                  this.$router.push('/signup');
-              }
-              if (x.status === 403) {
-                  this.$router.push('/login');
-              }
-              this.todoos = y;
-          })).catch(err => {
-              console.log(err);
-          });
-      },
-      data() {
-          return {
-              msg: 'Welcome to Your Vue.js PWA',
-              newTodoInput: null,
-              todoos: [],
-              deleteMode: false,
-              auth: ''
-          };
-      },
-      methods: {
-          toggleToDo(todo) {
-              if (this.deleteMode) {
-                  this.deleteTodo(todo._id);
-                  return;
-              }
-              todo.done = !todo.done;
-              fetch(api + 'toggleDone/', {
-                  headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                      'Authorization': this.auth
-                  },
-                  method: 'POST',
-                  body: JSON.stringify({
-                      id: todo._id,
-                      done: todo.done
-                  })
-              }).then(x => x.json().then(y => {
-                  this.newTodoInput = null;
-              })).catch(() => {
-                  this.$router.push('/login');
-              });
-          },
-          addTodo() {
-              fetch(api + 'addtodo/', {
-                  headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                      'Authorization': this.auth
-                  },
-                  method: 'POST',
-                  body: JSON.stringify({
-                      todo: this.newTodoInput
-                  })
-              }).then(x => x.json().then(y => {
-                  this.newTodoInput = null;
-                  //  console.log(x);
-                  console.log(y);
-                  this.todoos.push(y);
-              })).catch(() => {
-                  this.$router.push('/login');
-              });
-          },
-          deleteTodo(id) {
-              event.stopPropagation();
-              fetch(api + 'deleteTodo/', {
-                  headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                      'Authorization': this.auth
-                  },
-                  method: 'DELETE',
-                  body: JSON.stringify({
-                      id: id
-                  })
-              }).then(x => x.json().then(y => {
-                  if (y.message === 'jwt expired') {
-                      this.$router.push('/login');
-                  }
-                  if (y.message === 'jwt malformed') {
-                      this.$router.push('/signup');
-                  }
-                  this.todoos.splice(this.todoos.findIndex(i => i._id === id), 1);
-              })).catch(() => {
-                  this.$router.push('/login');
-              });
-          }
-
-      }
-  };
-
+import { api } from '../api/api';
+export default {
+    name: 'hello',
+    mounted() {
+        this.auth = 'Bearer ' + localStorage.getItem('token');
+        if (localStorage.getItem('googleToken')) {
+            this.auth = 'Google ' + localStorage.getItem('googleToken');
+        }
+        fetch(api + 'todoos', {
+            headers: {
+                Authorization: this.auth
+            },
+            method: 'GET'
+        })
+            .then(x =>
+                x.json().then(y => {
+                    if (y.message === 'jwt malformed') {
+                        this.$router.push('/signup');
+                    }
+                    if (x.status === 403) {
+                        this.$router.push('/login');
+                    }
+                    this.todoos = y;
+                })
+            )
+            .catch(err => {
+                console.log(err);
+            });
+    },
+    data() {
+        return {
+            msg: 'Welcome to Your Vue.js PWA',
+            newTodoInput: null,
+            todoos: [],
+            deleteMode: false,
+            auth: ''
+        };
+    },
+    methods: {
+        toggleToDo(todo) {
+            if (this.deleteMode) {
+                this.deleteTodo(todo._id);
+                return;
+            }
+            todo.done = !todo.done;
+            fetch(api + 'toggleDone/', {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    id: todo._id,
+                    done: todo.done
+                })
+            })
+                .then(x =>
+                    x.json().then(y => {
+                        this.newTodoInput = null;
+                    })
+                )
+                .catch(() => {
+                    this.$router.push('/login');
+                });
+        },
+        addTodo() {
+            fetch(api + 'addtodo/', {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    todo: this.newTodoInput
+                })
+            })
+                .then(x =>
+                    x.json().then(y => {
+                        this.newTodoInput = null;
+                        //  console.log(x);
+                        console.log(y);
+                        this.todoos.push(y);
+                    })
+                )
+                .catch(() => {
+                    this.$router.push('/login');
+                });
+        },
+        deleteTodo(id) {
+            event.stopPropagation();
+            fetch(api + 'deleteTodo/', {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth
+                },
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id: id
+                })
+            })
+                .then(x =>
+                    x.json().then(y => {
+                        if (y.message === 'jwt expired') {
+                            this.$router.push('/login');
+                        }
+                        if (y.message === 'jwt malformed') {
+                            this.$router.push('/signup');
+                        }
+                        this.todoos.splice(this.todoos.findIndex(i => i._id === id), 1);
+                    })
+                )
+                .catch(() => {
+                    this.$router.push('/login');
+                });
+        }
+    }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .todoContainer {
-    width: 90%;
-    max-width: 900px;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.todoContainer {
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .todoInner.deleteMode {
-    background: red;
-    color: white;
-  }
+.todoInner.deleteMode {
+  background: red;
+  color: white;
+}
 
-  .todo {
-    width: 25%;
-    float: left;
-    box-sizing: border-box;
-    padding: 10px 10px;
-  }
+.todo {
+  width: 25%;
+  float: left;
+  box-sizing: border-box;
+  padding: 10px 10px;
+}
 
-  .todoInner {
-    cursor: pointer;
-    padding: 35px;
-    background: var(--color-two);
-  }
+.todoInner {
+  cursor: pointer;
+  padding: 35px;
+  background: var(--color-two);
+}
 
-  h1,
-  h2 {
-    font-weight: normal;
-  }
+h1,
+h2 {
+  font-weight: normal;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
 
-  a {
-    color: var(--color-one);
-  }
+a {
+  color: var(--color-one);
+}
 
-  .hello {
-    display: flex;
-    justify-content: center;
-  }
-
+.hello {
+  display: flex;
+  justify-content: center;
+}
 </style>
