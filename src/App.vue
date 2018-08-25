@@ -75,6 +75,7 @@
         justify-content: center;
         align-items: center;
         display: none;
+        z-index: 999;
     }
 
     #loader.show {

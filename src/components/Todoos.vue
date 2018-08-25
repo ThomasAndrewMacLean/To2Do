@@ -8,8 +8,8 @@
                     <input class="u-full-width" type="text" placeholder="add new todo" v-model="newTodoInput">
                     <input type="submit" :disabled="!newTodoInput" value="Add" class="button-primary" />
                 </form>
+                <button id="deleteButton" @click="toggleDeleteMode">🗑</button>
             </div>
-            <button @click="deleteMode=!deleteMode">🗑 {{deleteMode}}</button>
         </div>
         <section class="todoContainer">
 
@@ -74,7 +74,16 @@
                 snackBarMsg: ''
             };
         },
+        computed: {
+            //msg: () => this.deleteMode ? 'Click a To2Do to delete it! ☠️' : 'Welcome to Your To2Do app!'
+
+        },
         methods: {
+            toggleDeleteMode() {
+
+                this.deleteMode = !this.deleteMode;
+                this.msg = this.deleteMode ? 'Click a To2Do to delete it! ☠️' : 'Welcome to Your To2Do app!';
+            },
             setSnackBarMsg(msg) {
                 this.snackBarMsg = msg;
             },
@@ -200,7 +209,7 @@
     }
 
     .todoInner.deleteMode {
-        background: red;
+        background: var(--color-one);
         color: white;
     }
 
@@ -209,6 +218,24 @@
         float: left;
         box-sizing: border-box;
         padding: 10px 10px;
+    }
+
+    @media (max-width: 900px) {
+        .todo {
+            width: 33.3333%;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .todo {
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .todo {
+            width: 100%;
+        }
     }
 
     .todoInner {
@@ -240,6 +267,13 @@
     .hello {
         display: flex;
         justify-content: center;
+    }
+
+    #deleteButton {
+        position: absolute;
+        top: 10rem;
+        right: 3rem;
+        font-size: 2rem;
     }
 
 </style>
