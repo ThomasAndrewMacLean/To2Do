@@ -125,7 +125,13 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+    @media (max-width: 450px) {
+        .hello {
+            margin: 2rem;
+        }
+    }
+
     .form-wrap {
         max-width: 400px;
         position: relative;
@@ -186,8 +192,8 @@
 
     .btn-wrap {
         display: flex;
-        justify-content: space-between;
-
+        /* //justify-content: space-between; */
+        flex-direction: column;
     }
 
 </style>

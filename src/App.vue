@@ -139,6 +139,8 @@
         color: var(--color-one);
 
         height: 100vh;
+        overflow-x: hidden;
+
     }
 
     main {
@@ -149,19 +151,27 @@
 
     header {
         margin: 0;
-        height: 56px;
+        min-height: 56px;
         padding: 0 16px 0 24px;
 
         background-color: var(--color-one);
         color: #ffffff;
         display: flex;
         align-items: baseline;
+        flex-wrap: wrap;
         justify-content: space-between;
+    }
+
+    @media (max-width: 450px) {
+        .logout-btn {
+            margin-top: 1rem;
+        }
     }
 
     .logout-btn {
         color: white;
         border: 1px solid white;
+
     }
 
     header span {

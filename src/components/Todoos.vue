@@ -6,9 +6,12 @@
                 <form v-on:submit.prevent="addTodo">
                     <label for="exampleEmailInput">New todo</label>
                     <input class="u-full-width" type="text" placeholder="add new todo" v-model="newTodoInput">
-                    <input type="submit" :disabled="!newTodoInput" value="Add" class="button-primary" />
+                    <div class="btn-wrap">
+
+                        <input id="submit-btn" type="submit" :disabled="!newTodoInput" value="Add" class="button-primary" />
+                        <button id="delete-btn" @click.prevent="toggleDeleteMode">🗑</button>
+                    </div>
                 </form>
-                <button id="deleteButton" @click="toggleDeleteMode">🗑</button>
             </div>
         </div>
         <section class="todoContainer">
@@ -174,7 +177,21 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+    .btn-wrap {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    #submit-btn {
+        width: 75%;
+    }
+
+    #delete-btn {
+        width: 22%;
+    }
+
     .snackBarMsgWrap {
         bottom: 0;
         background: var(--color-four);
@@ -235,6 +252,9 @@
     @media (max-width: 450px) {
         .todo {
             width: 100%;
+        }
+        form {
+            margin: 2rem;
         }
     }
 
