@@ -77,8 +77,8 @@
         data() {
             return {
                 msg: 'Login',
-                email: null,
-                password: null,
+                email: '',
+                password: '',
                 errorMsg: ''
             };
         },

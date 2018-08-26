@@ -153,10 +153,11 @@
                 })
                     .then(x =>
                         x.json().then(y => {
-                            this.newTodoInput = null;
                             //  console.log(x);
                             console.log(y);
+                            // y.todo = this.newTodoInput;
                             this.todoos.push(y);
+                            this.newTodoInput = null;
                             this.setSnackBarMsg('To2Do added ! 👍');
                         })
                     )
