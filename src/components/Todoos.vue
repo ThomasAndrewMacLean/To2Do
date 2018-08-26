@@ -17,7 +17,7 @@
         <section class="todoContainer">
 
             <div v-for="todo in todoos" class="todo" :key="todo._id">
-                <div v-bind:class="{ 'deleteMode': deleteMode}" class="todoInner" @click="toggleToDo(todo)">
+                <div v-bind:class="{ 'deleteMode': deleteMode}" class="todoInner" @click="toggleToDo(todo, $event)">
                     {{ todo.todo }}
                     <div v-if="todo.done">✅</div>
                     <p v-if="!todo.done"></p>
@@ -89,8 +89,23 @@
             },
             setSnackBarMsg(msg) {
                 this.snackBarMsg = msg;
+                if (msg) {
+                    setTimeout(() => this.setSnackBarMsg(''), 1500);
+                }
             },
-            toggleToDo(todo) {
+            toggleToDo(todo, e) {
+                if (e.altKey) {
+                    const el = document.createElement('textarea');
+                    el.value = todo.todo;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+
+                    this.setSnackBarMsg('To2Do copied! 💾');
+                    return;
+                }
+
                 if (this.deleteMode) {
                     this.deleteTodo(todo._id);
                     return;
@@ -136,7 +151,6 @@
                             console.log(y);
                             this.todoos.push(y);
                             this.setSnackBarMsg('To2Do added ! 👍');
-                            setTimeout(() => this.setSnackBarMsg(''), 1500);
                         })
                     )
                     .catch(() => {
@@ -263,6 +277,7 @@
         padding: 35px;
         word-break: break-word;
         background: var(--color-two);
+        overflow: hidden;
     }
 
     h1,
