@@ -6,9 +6,9 @@
                 <form v-on:submit.prevent="login">
 
                     <label for="exampleEmailInput">Email</label>
-                    <input class="u-full-width" type="email" placeholder="example@something.io" v-model="email">
+                    <input class="u-full-width" type="email" placeholder="example@something.io" @blur="onBlurEmail" v-model="email">
                     <label for="exampleEmailInput">Password</label>
-                    <input class="u-full-width" type="password" placeholder="p@55w0rD" v-model="password">
+                    <input class="u-full-width" type="password" placeholder="p@55w0rD" @blur="onBlurPassword" v-model="password">
                     <div class="btn-wrap">
                         <input type="submit" :disabled="email===''||password===''" value="login" class="button-primary" />
                         <button @click.prevent id="customBtn">
@@ -83,6 +83,12 @@
             };
         },
         methods: {
+            onBlurPassword(event) {
+                if (event && this.password !== event.target.value) this.password = event.target.value;
+            },
+            onBlurEmail(event) {
+                if (event && this.email !== event.target.value) this.email = event.target.value;
+            },
             clearErrorMsg() {
                 this.errorMsg = '';
             },
