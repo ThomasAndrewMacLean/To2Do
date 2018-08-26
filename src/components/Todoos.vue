@@ -133,7 +133,12 @@
                     });
             },
             addTodo() {
-                document.activeElement.blur();
+                var isMobile = window.matchMedia('only screen and (max-width: 760px)');
+
+                if (isMobile.matches) {
+                    //Conditional script here
+                    document.activeElement.blur();
+                }
                 fetch(api + 'addtodo/', {
                     headers: {
                         Accept: 'application/json',
