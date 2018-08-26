@@ -133,6 +133,7 @@
                     });
             },
             addTodo() {
+                document.activeElement.blur();
                 fetch(api + 'addtodo/', {
                     headers: {
                         Accept: 'application/json',
@@ -141,7 +142,8 @@
                     },
                     method: 'POST',
                     body: JSON.stringify({
-                        todo: this.newTodoInput
+                        todo: this.newTodoInput,
+                        timeStamp: +new Date()
                     })
                 })
                     .then(x =>
