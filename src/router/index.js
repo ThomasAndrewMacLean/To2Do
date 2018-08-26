@@ -48,7 +48,7 @@ export default new Router({
                     this.auth = 'Google ' + localStorage.getItem('googleToken');
                 }
 
-                fetch(api + 'isadmin', {
+                fetch(api + 'admin/isadmin', {
                     headers: {
                         'Authorization': this.auth
                     },

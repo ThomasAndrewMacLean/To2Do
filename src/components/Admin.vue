@@ -31,7 +31,7 @@
               this.auth = 'Google ' + localStorage.getItem('googleToken');
           }
 
-          fetch(api + 'allusers', {
+          fetch(api + 'admin/allusers', {
               headers: {
                   'Authorization': this.auth
               },
@@ -58,7 +58,7 @@
               }
 
 
-              fetch(api + 'todoForUser', {
+              fetch(api + 'admin/todoForUser', {
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
@@ -87,7 +87,7 @@
           },
           deleteUser(user) {
               event.stopPropagation();
-              fetch(api + 'deleteUser', {
+              fetch(api + 'admin/deleteUser', {
                   headers: {
                       Accept: 'application/json',
                       'Content-Type': 'application/json',
