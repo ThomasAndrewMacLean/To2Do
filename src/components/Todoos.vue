@@ -207,6 +207,7 @@
     }
 
     #submit-btn {
+        cursor: pointer;
         width: 75%;
     }
 
@@ -275,6 +276,7 @@
         .todo {
             width: 100%;
         }
+
         form {
             margin: 2rem;
         }

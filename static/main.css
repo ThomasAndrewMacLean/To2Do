@@ -1,12 +1,12 @@
 :root {
-  --color-one: #f38181;
-  --color-two: #fce38a;
-  --color-three: #eaffd0;
-  --color-four: #95e1d3;
+    --color-one: #444;
+    --color-two: #CCC;
+    --color-three: white;
+    --color-four: #95e1d3;
 }
 
 .center-text {
-  text-align: center;
+    text-align: center;
 }
 
 .button.button-primary,
@@ -14,8 +14,8 @@ button.button-primary,
 input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
-  background-color: var(--color-four);
-  border-color: var(--color-four);
+    background-color: var(--color-four);
+    border-color: var(--color-four);
 }
 
 .button.button-primary:hover,
@@ -28,9 +28,9 @@ button.button-primary:focus,
 input[type="submit"].button-primary:focus,
 input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
-  color: var(--color-four);
-  background-color: white;
-  border-color: var(--color-four);
+    color: var(--color-four);
+    background-color: white;
+    border-color: var(--color-four);
 }
 
 input[type="email"]:focus,
@@ -42,22 +42,20 @@ input[type="url"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-  border: 1px solid var(--color-four);
-  outline: 0;
+    border: 1px solid var(--color-four);
+    outline: 0;
 }
 
 /* Change the white to any color ;) */
-
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset;
+    -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 /*Change text in autofill textbox*/
-
 input:-webkit-autofill {
-  -webkit-text-fill-color: #666 !important;
+    -webkit-text-fill-color: #666 !important;
 }
 
 input {
-  color: #666;
+    color: #666;
 }
