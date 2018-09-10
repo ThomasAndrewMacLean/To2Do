@@ -8,7 +8,6 @@
         <main>
             <div id="loader" v-bind:class="{ 'show': showLoader}">
                 <div class="loaderMsg">
-
                     <div class="spinner"></div>
                     Loading...
                 </div>
@@ -33,7 +32,7 @@
         data() {
             return {
                 email: null,
-                showLoader: true
+                showLoader: false
             };
         },
         methods: {
