@@ -6,13 +6,17 @@
                 <form v-on:submit.prevent="login">
 
                     <label for="exampleEmailInput">Email</label>
-                    <input class="u-full-width" type="email" placeholder="example@something.io" @blur="onBlurEmail" v-model="email">
+                    <input class="u-full-width" type="email" placeholder="example@something.io" @blur="onBlurEmail"
+                        v-model="email">
                     <label for="exampleEmailInput">Password</label>
                     <input class="u-full-width" type="password" placeholder="p@55w0rD" @blur="onBlurPassword" v-model="password">
                     <div class="btn-wrap">
                         <input type="submit" :disabled="email===''||password===''" value="login" class="button-primary" />
                         <button @click.prevent id="customBtn">
                             Login with Google
+                        </button>
+                        <button class="secondaryButton" @click.prevent="goToSignUp">
+                            Sign up
                         </button>
                     </div>
                 </form>
@@ -83,6 +87,9 @@
             };
         },
         methods: {
+            goToSignUp() {
+                this.$router.push('/Signup');
+            },
             onBlurPassword(event) {
                 if (event && this.password !== event.target.value) this.password = event.target.value;
             },

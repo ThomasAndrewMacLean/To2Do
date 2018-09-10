@@ -33,7 +33,7 @@
         data() {
             return {
                 email: null,
-                showLoader: false
+                showLoader: true
             };
         },
         methods: {
@@ -71,7 +71,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(149, 225, 211, 0.3);
         justify-content: center;
         align-items: center;
         display: none;
@@ -88,8 +88,8 @@
         height: 40px;
         border-radius: 80px;
         margin: auto;
-        border: 3px solid var(--color-three);
-        border-top: 3px solid var(--color-one);
+        border: 5px solid var(--color-four);
+        border-top: 5px solid var(--color-three);
         animation: rotating 2s linear infinite;
         -webkit-animation: rotating 2s linear infinite;
 
@@ -100,6 +100,7 @@
         from {
             -webkit-transform: rotate(0deg);
         }
+
         to {
             -webkit-transform: rotate(360deg);
         }
@@ -109,6 +110,7 @@
         from {
             -webkit-transform: rotate(0deg);
         }
+
         to {
             -webkit-transform: rotate(360deg);
         }
@@ -116,7 +118,7 @@
 
     .loaderMsg {
 
-        background: var(--color-three);
+        background: var(--color-four);
         border-radius: 4px;
         padding: 3rem;
         border: 3px solid var(--color-one);
