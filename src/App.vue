@@ -37,7 +37,13 @@
         },
         methods: {
             goTooTo2Do() {
-                this.$router.push('/To2Do');
+                if (localStorage.getItem('token')) {
+                    this.$router.push('/To2Do');
+                } else if (localStorage.getItem('to2do')) {
+                    this.$router.push('/Login');
+                } else {
+                    this.$router.push('/Signup');
+                }
 
             },
             logout() {
