@@ -51,7 +51,7 @@
                 localStorage.removeItem('token');
                 var auth2 = gapi.auth2.getAuthInstance();
                 if (auth2) {
-                    auth2.signOut().then(function () {
+                    auth2.signOut().then(() => {
                         this.email = null;
                         this.$router.push('/login');
                     });
