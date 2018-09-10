@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <header>
-            <span @click="goTooTo2Do">To2Do</span>
+            <span @click="clickOnHeader">To2Do</span>
             {{email}}
             <button v-if="email" @click="logout" class="logout-btn u-pull-right">logout</button>
         </header>
@@ -36,7 +36,7 @@
             };
         },
         methods: {
-            goTooTo2Do() {
+            clickOnHeader() {
                 if (localStorage.getItem('token')) {
                     this.$router.push('/To2Do');
                 } else if (localStorage.getItem('to2do')) {
@@ -52,11 +52,10 @@
                 var auth2 = gapi.auth2.getAuthInstance();
                 if (auth2) {
                     auth2.signOut().then(function () {
-                        console.log('User signed out.');
+                        this.email = null;
+                        this.$router.push('/login');
                     });
                 }
-                this.email = null;
-                this.$router.push('/login');
             },
             setEmail(email) {
                 this.email = email;

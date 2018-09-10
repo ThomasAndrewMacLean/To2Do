@@ -15,6 +15,7 @@
                         </button>
                     </div>
                 </form>
+                <div class="warning">{{error}}</div>
             </div>
         </div>
     </div>
@@ -34,13 +35,12 @@
             return {
                 msg: 'Sign up',
                 email: null,
-                password: null
+                password: null,
+                error: null
             };
         },
         methods: {
             signup() {
-                console.log(this.email);
-                console.warn(this.password);
                 fetch(api + 'signup', {
                     headers: {
                         Accept: 'application/json',
@@ -58,7 +58,7 @@
                             localStorage.setItem('to2do', true);
                             this.$router.push('/Confirm');
                         } else {
-                            console.log('it went wrong?');
+                            this.error = 'Something went wrong';
                         }
                     })
                 );
@@ -77,6 +77,10 @@
         .hello {
             margin: 2rem;
         }
+    }
+
+    .warning {
+        color: tomato
     }
 
     .btn-wrap {

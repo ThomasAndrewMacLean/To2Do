@@ -61,7 +61,6 @@ export default new Router({
                     }
 
                 })).catch(err => {
-                    console.log(err);
                 });
             }
         }]

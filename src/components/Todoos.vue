@@ -64,7 +64,6 @@
                     })
                 )
                 .catch(err => {
-                    console.log(err);
                 });
         },
         data() {
@@ -154,7 +153,6 @@
                     .then(x =>
                         x.json().then(y => {
                             //  console.log(x);
-                            console.log(y);
                             // y.todo = this.newTodoInput;
                             this.todoos.push(y);
                             this.newTodoInput = null;

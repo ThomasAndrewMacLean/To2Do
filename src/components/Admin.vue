@@ -37,11 +37,8 @@
               },
               method: 'GET'
           }).then(x => x.json().then(y => {
-              console.log(y);
-
               this.users = y;
           })).catch(err => {
-              console.log(err);
           });
       },
       data() {
@@ -69,7 +66,6 @@
                   }),
                   method: 'POST'
               }).then(x => x.json().then(y => {
-                  console.log(y);
                   if (y.length) {
                       user.todoos = [...y];
                   } else {
@@ -82,7 +78,6 @@
                   //   console.log(this.users);
 
               })).catch(err => {
-                  console.log(err);
               });
           },
           deleteUser(user) {
@@ -98,7 +93,6 @@
                   }),
                   method: 'DELETE'
               }).then(x => x.json().then(y => {
-                  console.log(y);
                   this.users.splice(this.users.findIndex(i => i.id === user.id), 1);
 
                   //user.email = 'ok';
@@ -106,7 +100,6 @@
                   //   console.log(this.users);
 
               })).catch(err => {
-                  console.log(err);
               });
           }
       }
