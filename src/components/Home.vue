@@ -9,7 +9,7 @@
         name: 'Home',
         mounted() {
             if (localStorage.getItem('to2do')) {
-                this.$router.push('/Login');
+                this.$router.push('/To2Do');
             } else {
                 this.$router.push('/Signup');
 
