@@ -53,11 +53,13 @@
                     })
                 }).then(x =>
                     x.json().then(y => {
-                        console.log(y);
-                        localStorage.setItem('token', y.token);
-                        localStorage.setItem('to2do', true);
-
-                        this.$router.push('/Confirm');
+                        if (y.token) {
+                            localStorage.setItem('token', y.token);
+                            localStorage.setItem('to2do', true);
+                            this.$router.push('/Confirm');
+                        } else {
+                            console.log('it went wrong?');
+                        }
                     })
                 );
             },
