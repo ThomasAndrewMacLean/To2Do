@@ -41,6 +41,7 @@
     export default {
         name: 'todoosPage',
         mounted() {
+            this.$emit('setLoader', true);
             this.auth = 'Bearer ' + localStorage.getItem('token');
             if (localStorage.getItem('googleToken')) {
                 this.auth = 'Google ' + localStorage.getItem('googleToken');
@@ -53,6 +54,7 @@
             })
                 .then(x =>
                     x.json().then(y => {
+                        this.$emit('setLoader', false);
                         if (y.message === 'jwt malformed') {
                             this.$router.push('/signup');
                         }
@@ -64,6 +66,7 @@
                     })
                 )
                 .catch(err => {
+                    this.$emit('setLoader', false);
                 });
         },
         data() {
