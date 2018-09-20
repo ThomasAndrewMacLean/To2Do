@@ -1,5 +1,7 @@
 # to2do
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ThomasAndrewMacLean/To2Do.svg)](https://greenkeeper.io/)
+
 > A must have todooList
 
 ## Build Setup
