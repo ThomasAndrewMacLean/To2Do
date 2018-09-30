@@ -61,7 +61,7 @@
                         if (x.status === 403) {
                             this.$router.push('/login');
                         }
-                        this.todoos = y.todoos;
+                        this.todoos = y.todoos; //.filter(todo => !todo.done);
                         this.$emit('setEmail', y.user);
                     })
                 )
@@ -107,7 +107,25 @@
                     this.setSnackBarMsg('To2Do copied! 💾');
                     return;
                 }
+                if (e.shiftKey) {
+                    let update = prompt('update todo', todo.todo);
+                    if (!update) return;
+                    todo.todo = update;
+                    fetch(api + 'updateTodo/', {
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            Authorization: this.auth
+                        },
+                        method: 'POST',
+                        body: JSON.stringify({
+                            id: todo._id,
+                            todo: update
+                        })
+                    });
 
+                    return;
+                }
                 if (this.deleteMode) {
                     this.deleteTodo(todo._id);
                     return;
