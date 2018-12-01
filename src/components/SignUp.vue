@@ -10,8 +10,11 @@
                     <input class="u-full-width" type="password" placeholder="p@55w0rD" v-model="password">
                     <div class="btn-wrap">
                         <input type="submit" :disabled="email===''||password===''" value="signup" class="button-primary" />
-                        <button class="secondaryButton" @click.prevent="goToLogin">
-                            Login
+                        <button @click.prevent id="customBtn">
+                            Or sign up with Google
+                        </button>
+                        <button class="tertiorButton" @click.prevent="goToLogin">
+                            Allready have an account? Login here
                         </button>
                     </div>
                 </form>
@@ -29,7 +32,42 @@
     export default {
         name: 'SignUp',
         mounted() {
-            //fetch(api + 'users').then(x => x.json()).then(y => console.log(y));
+            gapi.load('auth2', () => {
+                // Retrieve the singleton for the GoogleAuth library and set up the client.
+                var auth2 = gapi.auth2.init({
+                    client_id: '171417293160-02sar26733jopm7hvfb6e5cgk4mq21d7.apps.googleusercontent.com'
+                });
+                const element = document.getElementById('customBtn');
+                auth2.attachClickHandler(element, {},
+                    (googleUser) => {
+                        var id_token = googleUser.getAuthResponse().id_token;
+                        this.$emit('setLoader', true);
+
+                        localStorage.setItem('googleToken', id_token);
+                        localStorage.setItem('to2do', true);
+
+                        const profile = auth2.currentUser.get().getBasicProfile();
+
+                        fetch(api + 'loginGoogle', {
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                                Authorization: 'Google ' + id_token
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                name: profile.getName()
+                            })
+                        });
+                        this.$emit('setEmail', profile.getName());
+                        this.$emit('setLoader', false);
+
+                        this.$router.push('/To2Do');
+                    },
+                    function (error) {
+                        alert(JSON.stringify(error, undefined, 2));
+                    });
+            });
         },
         data() {
             return {
